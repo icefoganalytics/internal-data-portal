@@ -1,11 +1,11 @@
 import { type Ref, reactive, unref, watch, toRefs } from "vue"
 import { isNil } from "lodash"
 
-import datasetsApi, { Dataset, Policy } from "@/api/datasets-api"
+import datasetsApi, { DatasetDetailedResult, Policy } from "@/api/datasets-api"
 
 export function useDataset(slug: Ref<string>) {
   const state = reactive<{
-    dataset: Dataset | null
+    dataset: DatasetDetailedResult | null
     policy: Policy | null
     isLoading: boolean
     isErrored: boolean

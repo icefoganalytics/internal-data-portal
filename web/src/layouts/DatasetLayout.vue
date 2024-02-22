@@ -18,10 +18,11 @@
 
     <v-tabs>
       <component
-        :is="tabComponent"
-        v-for="tabComponent in availableTabs"
-        :key="tabComponent.name"
+        :is="component"
+        v-for="{ component, attributes } in availableTabs"
+        :key="component.name"
         :slug="slug"
+        v-bind="attributes"
       />
     </v-tabs>
 
@@ -35,6 +36,7 @@ import { isNil } from "lodash"
 
 import useCurrentUser, { RoleTypes } from "@/use/use-current-user"
 import useDataset from "@/use/use-dataset"
+import { AccessTypes } from "@/api/access-grants-api"
 
 const props = defineProps({
   slug: {
@@ -55,22 +57,50 @@ const FieldsTab = defineAsyncComponent(() => import("@/layouts/dataset-layout/Fi
 // TODO: access tab only has manage view, which is a bit confusing
 const AccessTab = defineAsyncComponent(() => import("@/layouts/dataset-layout/AccessTab.vue"))
 
-type TabComponents = typeof DescriptionTab | typeof FieldsTab | typeof AccessTab
-
-const TAB_IMPORTS: {
-  [key in RoleTypes]: TabComponents[]
-} = {
-  [RoleTypes.DATA_OWNER]: [DescriptionTab, FieldsTab, AccessTab],
-  [RoleTypes.SYSTEM_ADMIN]: [DescriptionTab, FieldsTab, AccessTab],
-  [RoleTypes.BUSINESS_ANALYST]: [DescriptionTab, FieldsTab, AccessTab],
-  [RoleTypes.USER]: [DescriptionTab, FieldsTab],
+type TabComponents = {
+  component: typeof DescriptionTab | typeof FieldsTab | typeof AccessTab
+  attributes: {
+    locked: boolean
+  }
 }
+
+const isUserFieldsTabLocked = computed(() => {
+  if (dataset.value?.currentUserAccessGrant?.accessType === AccessTypes.OPEN_ACCESS) {
+    return false
+  }
+
+  return isNil(dataset.value?.currentUserAccessRequest?.approvedAt)
+})
+
+const tabImports = computed<{
+  [key in RoleTypes]: TabComponents[]
+}>(() => ({
+  [RoleTypes.DATA_OWNER]: [
+    { component: DescriptionTab, attributes: { locked: false } },
+    { component: FieldsTab, attributes: { locked: false } },
+    { component: AccessTab, attributes: { locked: false } },
+  ],
+  [RoleTypes.SYSTEM_ADMIN]: [
+    { component: DescriptionTab, attributes: { locked: false } },
+    { component: FieldsTab, attributes: { locked: false } },
+    { component: AccessTab, attributes: { locked: false } },
+  ],
+  [RoleTypes.BUSINESS_ANALYST]: [
+    { component: DescriptionTab, attributes: { locked: false } },
+    { component: FieldsTab, attributes: { locked: false } },
+    { component: AccessTab, attributes: { locked: false } },
+  ],
+  [RoleTypes.USER]: [
+    { component: DescriptionTab, attributes: { locked: false } },
+    { component: FieldsTab, attributes: { locked: isUserFieldsTabLocked.value } },
+  ],
+}))
 
 const availableTabs = computed<Set<TabComponents>>(() => {
   const tabs = new Set<TabComponents>()
 
   currentUser.value?.roleTypes.forEach((role) => {
-    const roleTabs = TAB_IMPORTS[role]
+    const roleTabs = tabImports.value[role]
     roleTabs.forEach((tab) => tabs.add(tab))
   })
 
