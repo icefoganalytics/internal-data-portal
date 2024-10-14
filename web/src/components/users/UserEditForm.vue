@@ -71,6 +71,7 @@
           :model-value="groupMembershipAttributes.departmentId"
           :type="UserGroupTypes.DEPARTMENT"
           :parent-id="null"
+          :disabled="!isSystemAdmin"
           :rules="[required]"
           label="Department"
           variant="outlined"
@@ -86,7 +87,7 @@
           :model-value="groupMembershipAttributes.divisionId"
           :type="UserGroupTypes.DIVISION"
           :parent-id="groupMembershipAttributes.departmentId"
-          :disabled="isNil(groupMembershipAttributes.departmentId)"
+          :disabled="isNil(groupMembershipAttributes.departmentId) || !isSystemAdmin"
           label="Division"
           variant="outlined"
           clearable
@@ -104,7 +105,7 @@
           :model-value="groupMembershipAttributes.branchId"
           :type="UserGroupTypes.BRANCH"
           :parent-id="groupMembershipAttributes.divisionId"
-          :disabled="isNil(groupMembershipAttributes.divisionId)"
+          :disabled="isNil(groupMembershipAttributes.divisionId) || !isSystemAdmin"
           label="Branch"
           variant="outlined"
           clearable
@@ -119,7 +120,7 @@
           :model-value="groupMembershipAttributes.unitId"
           :type="UserGroupTypes.UNIT"
           :parent-id="groupMembershipAttributes.branchId"
-          :disabled="isNil(groupMembershipAttributes.branchId)"
+          :disabled="isNil(groupMembershipAttributes.branchId) || !isSystemAdmin"
           label="Unit"
           variant="outlined"
           clearable
@@ -206,7 +207,7 @@ const props = withDefaults(
 const emit = defineEmits(["saved"])
 
 const { userId } = toRefs(props)
-const { user, save, isLoading } = useUser(userId)
+const { user, isSystemAdmin, save, isLoading } = useUser(userId)
 
 const snack = useSnack()
 
