@@ -1,7 +1,7 @@
-import { type Ref, reactive, unref, watch, toRefs } from "vue"
+import { type Ref, reactive, unref, watch, toRefs, computed } from "vue"
 import { isNil } from "lodash"
 
-import usersApi, { type User, type UserUpdate } from "@/api/users-api"
+import usersApi, { RoleTypes, type User, type UserUpdate } from "@/api/users-api"
 
 export { type User, type UserUpdate }
 
@@ -24,6 +24,10 @@ export function useUser(
     isLoading: false,
     isErrored: false,
   })
+
+  const isSystemAdmin = computed(
+    () => state.user?.roles?.some(({ role }) => role === RoleTypes.SYSTEM_ADMIN)
+  )
 
   async function fetch() {
     const staticId = unref(id)
@@ -118,6 +122,7 @@ export function useUser(
 
   return {
     ...toRefs(state),
+    isSystemAdmin,
     fetch,
     refresh: fetch,
     save,
