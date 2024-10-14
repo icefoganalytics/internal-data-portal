@@ -186,6 +186,7 @@ import useSnack from "@/use/use-snack"
 import useUser from "@/use/use-user"
 
 import UserGroupAutocomplete from "@/components/user-groups/UserGroupAutocomplete.vue"
+import useCurrentUser from "@/use/use-current-user"
 
 type CancelButtonOptions = VBtn["$props"]
 
@@ -207,7 +208,8 @@ const props = withDefaults(
 const emit = defineEmits(["saved"])
 
 const { userId } = toRefs(props)
-const { user, isSystemAdmin, save, isLoading } = useUser(userId)
+const { user, save, isLoading } = useUser(userId)
+const { isSystemAdmin } = useCurrentUser()
 
 const snack = useSnack()
 
