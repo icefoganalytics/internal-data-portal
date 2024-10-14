@@ -32,15 +32,18 @@ export class UsersPolicy extends BasePolicy<User> {
   }
 
   permittedAttributes(): Path[] {
-    return [
-      "email",
-      "firstName",
-      "lastName",
-      "position",
-      {
-        groupMembershipAttributes: ["departmentId", "divisionId", "branchId", "unitId"],
-      },
-    ]
+    if (this.user.roleTypes.includes(RoleTypes.SYSTEM_ADMIN)) {
+      return [
+        "email",
+        "firstName",
+        "lastName",
+        "position",
+        {
+          groupMembershipAttributes: ["departmentId", "divisionId", "branchId", "unitId"],
+        },
+      ]
+    }
+    return ["email", "firstName", "lastName"]
   }
 
   permittedAttributesForCreate(): Path[] {
