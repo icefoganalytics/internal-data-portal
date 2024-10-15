@@ -22,6 +22,10 @@ const state = reactive<{
 export function useCurrentUser() {
   const isReady = computed(() => !state.isLoading && !state.isErrored)
 
+  const isSystemAdmin = computed(
+    () => state.currentUser?.roles?.some(({ role }) => role === RoleTypes.SYSTEM_ADMIN)
+  )
+
   async function fetch(): Promise<User> {
     state.isLoading = true
     try {
@@ -88,6 +92,7 @@ export function useCurrentUser() {
   return {
     ...toRefs(state),
     isReady,
+    isSystemAdmin,
     fetch,
     refresh: fetch,
     ensure,
