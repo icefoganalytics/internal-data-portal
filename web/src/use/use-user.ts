@@ -25,9 +25,7 @@ export function useUser(
     isErrored: false,
   })
 
-  const isSystemAdmin = computed(
-    () => state.user?.roles?.some(({ role }) => role === RoleTypes.SYSTEM_ADMIN)
-  )
+  const isSystemAdmin = computed(() => state.user?.roleTypes.includes(RoleTypes.SYSTEM_ADMIN))
 
   async function fetch() {
     const staticId = unref(id)
