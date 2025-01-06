@@ -71,11 +71,12 @@
           :model-value="groupMembershipAttributes.departmentId"
           :type="UserGroupTypes.DEPARTMENT"
           :parent-id="null"
-          :disabled="!isSystemAdmin"
           :rules="[required]"
           label="Department"
           variant="outlined"
           required
+          :readonly="!isSystemAdmin"
+          :append-inner-icon="!isSystemAdmin ? 'mdi-lock' : ''"
           @update:model-value="updateDepartment"
         />
       </v-col>
@@ -87,10 +88,13 @@
           :model-value="groupMembershipAttributes.divisionId"
           :type="UserGroupTypes.DIVISION"
           :parent-id="groupMembershipAttributes.departmentId"
-          :disabled="isNil(groupMembershipAttributes.departmentId) || !isSystemAdmin"
           label="Division"
           variant="outlined"
           clearable
+          :readonly="!isSystemAdmin || isNil(groupMembershipAttributes.departmentId)"
+          :append-inner-icon="
+            !isSystemAdmin || isNil(groupMembershipAttributes.departmentId) ? 'mdi-lock' : ''
+          "
           @update:model-value="updateDivision"
         />
       </v-col>
@@ -105,10 +109,13 @@
           :model-value="groupMembershipAttributes.branchId"
           :type="UserGroupTypes.BRANCH"
           :parent-id="groupMembershipAttributes.divisionId"
-          :disabled="isNil(groupMembershipAttributes.divisionId) || !isSystemAdmin"
           label="Branch"
           variant="outlined"
           clearable
+          :readonly="!isSystemAdmin || isNil(groupMembershipAttributes.divisionId)"
+          :append-inner-icon="
+            !isSystemAdmin || isNil(groupMembershipAttributes.divisionId) ? 'mdi-lock' : ''
+          "
           @update:model-value="updateBranch"
         />
       </v-col>
@@ -120,10 +127,13 @@
           :model-value="groupMembershipAttributes.unitId"
           :type="UserGroupTypes.UNIT"
           :parent-id="groupMembershipAttributes.branchId"
-          :disabled="isNil(groupMembershipAttributes.branchId) || !isSystemAdmin"
           label="Unit"
           variant="outlined"
           clearable
+          :readonly="!isSystemAdmin || isNil(groupMembershipAttributes.branchId)"
+          :append-inner-icon="
+            !isSystemAdmin || isNil(groupMembershipAttributes.branchId) ? 'mdi-lock' : ''
+          "
           @update:model-value="updateUnit"
         />
       </v-col>
