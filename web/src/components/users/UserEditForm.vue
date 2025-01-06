@@ -176,17 +176,17 @@
 import { isNil } from "lodash"
 import { ref, toRefs, watch } from "vue"
 import { useI18n } from "vue-i18n"
-
 import { VBtn } from "vuetify/lib/components/index.mjs"
 
-import { GroupMembership } from "@/api/users-api"
 import { required } from "@/utils/validators"
+
+import { GroupMembership } from "@/api/users-api"
 import { UserGroupTypes } from "@/api/user-groups-api"
 import useSnack from "@/use/use-snack"
 import useUser from "@/use/use-user"
+import useCurrentUser from "@/use/use-current-user"
 
 import UserGroupAutocomplete from "@/components/user-groups/UserGroupAutocomplete.vue"
-import useCurrentUser from "@/use/use-current-user"
 
 type CancelButtonOptions = VBtn["$props"]
 
