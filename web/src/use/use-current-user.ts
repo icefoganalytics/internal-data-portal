@@ -23,7 +23,7 @@ export function useCurrentUser() {
   const isReady = computed(() => !state.isLoading && !state.isErrored)
 
   const isSystemAdmin = computed(
-    () => state.currentUser?.roles?.some(({ role }) => role === RoleTypes.SYSTEM_ADMIN)
+    () => state.currentUser?.roleTypes.includes(RoleTypes.SYSTEM_ADMIN)
   )
 
   async function fetch(): Promise<User> {
