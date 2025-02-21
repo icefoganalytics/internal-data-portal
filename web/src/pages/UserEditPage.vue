@@ -29,7 +29,15 @@
       </div>
     </h2>
 
+    <AdminUserEditForm
+      v-if="isSystemAdmin"
+      class="mt-10"
+      :user-id="user.id"
+      :cancel-button-options="{ to: { name: 'UsersPage' } }"
+      @saved="refresh"
+    />
     <UserEditForm
+      v-else
       class="mt-10"
       :user-id="user.id"
       :cancel-button-options="{ to: { name: 'UsersPage' } }"
@@ -44,7 +52,9 @@ import { isNil } from "lodash"
 
 import useBreadcrumbs from "@/use/use-breadcrumbs"
 import useUser from "@/use/use-user"
+import useCurrentUser from "@/use/use-current-user"
 
+import AdminUserEditForm from "@/components/users/AdminUserEditForm.vue"
 import UserEditForm from "@/components/users/UserEditForm.vue"
 
 const props = defineProps<{
@@ -53,6 +63,7 @@ const props = defineProps<{
 
 const userId = computed(() => parseInt(props.userId))
 const { user, sync, refresh } = useUser(userId)
+const { isSystemAdmin } = useCurrentUser()
 
 const username = computed(() => {
   if (user.value === null) return "loading..."
