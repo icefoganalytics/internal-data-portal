@@ -75,8 +75,6 @@
           label="Department"
           variant="outlined"
           required
-          readonly
-          append-inner-icon="mdi-lock"
           @update:model-value="updateDepartment"
         />
       </v-col>
@@ -91,8 +89,8 @@
           label="Division"
           variant="outlined"
           clearable
-          readonly
-          append-inner-icon="mdi-lock"
+          :readonly="isNil(groupMembershipAttributes.departmentId)"
+          :append-inner-icon="isNil(groupMembershipAttributes.departmentId) ? 'mdi-lock' : ''"
           @update:model-value="updateDivision"
         />
       </v-col>
@@ -110,8 +108,8 @@
           label="Branch"
           variant="outlined"
           clearable
-          readonly
-          append-inner-icon="mdi-lock"
+          :readonly="isNil(groupMembershipAttributes.divisionId)"
+          :append-inner-icon="isNil(groupMembershipAttributes.divisionId) ? 'mdi-lock' : ''"
           @update:model-value="updateBranch"
         />
       </v-col>
@@ -126,8 +124,8 @@
           label="Unit"
           variant="outlined"
           clearable
-          readonly
-          append-inner-icon="mdi-lock"
+          :readonly="isNil(groupMembershipAttributes.branchId)"
+          :append-inner-icon="isNil(groupMembershipAttributes.branchId) ? 'mdi-lock' : ''"
           @update:model-value="updateUnit"
         />
       </v-col>
