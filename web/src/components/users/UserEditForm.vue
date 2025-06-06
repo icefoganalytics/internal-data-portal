@@ -76,6 +76,7 @@
           variant="outlined"
           required
           readonly
+          disabled
           append-inner-icon="mdi-lock"
           @update:model-value="updateDepartment"
         />
@@ -92,6 +93,7 @@
           variant="outlined"
           clearable
           readonly
+          disabled
           append-inner-icon="mdi-lock"
           @update:model-value="updateDivision"
         />
@@ -111,6 +113,7 @@
           variant="outlined"
           clearable
           readonly
+          disabled
           append-inner-icon="mdi-lock"
           @update:model-value="updateBranch"
         />
@@ -127,6 +130,7 @@
           variant="outlined"
           clearable
           readonly
+          disabled
           append-inner-icon="mdi-lock"
           @update:model-value="updateUnit"
         />
