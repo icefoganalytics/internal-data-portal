@@ -91,7 +91,6 @@
           clearable
           :readonly="isNil(groupMembershipAttributes.departmentId)"
           :disabled="isNil(groupMembershipAttributes.departmentId)"
-          :append-inner-icon="isNil(groupMembershipAttributes.departmentId) ? 'mdi-lock' : ''"
           @update:model-value="updateDivision"
         />
       </v-col>
@@ -111,7 +110,6 @@
           clearable
           :readonly="isNil(groupMembershipAttributes.divisionId)"
           :disabled="isNil(groupMembershipAttributes.divisionId)"
-          :append-inner-icon="isNil(groupMembershipAttributes.divisionId) ? 'mdi-lock' : ''"
           @update:model-value="updateBranch"
         />
       </v-col>
@@ -128,7 +126,6 @@
           clearable
           :readonly="isNil(groupMembershipAttributes.branchId)"
           :disabled="isNil(groupMembershipAttributes.branchId)"
-          :append-inner-icon="isNil(groupMembershipAttributes.branchId) ? 'mdi-lock' : ''"
           @update:model-value="updateUnit"
         />
       </v-col>
