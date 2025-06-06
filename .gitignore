@@ -110,3 +110,8 @@ db/sapassword.env
 
 # DB Data
 db/data
+
+# Other
+note.md
+notes.md
+now.sql
