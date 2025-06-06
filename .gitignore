@@ -70,6 +70,7 @@ typings/
 
 # dotenv environment variables file
 .env
+.envrc
 .env.test
 .env.production
 
@@ -109,3 +110,8 @@ db/sapassword.env
 
 # DB Data
 db/data
+
+# Other
+note.md
+notes.md
+now.sql

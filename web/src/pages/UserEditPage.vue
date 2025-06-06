@@ -29,7 +29,7 @@
       </div>
     </h2>
 
-    <UserEditForm
+    <AdminUserEditForm
       class="mt-10"
       :user-id="user.id"
       :cancel-button-options="{ to: { name: 'UsersPage' } }"
@@ -45,7 +45,7 @@ import { isNil } from "lodash"
 import useBreadcrumbs from "@/use/use-breadcrumbs"
 import useUser from "@/use/use-user"
 
-import UserEditForm from "@/components/users/UserEditForm.vue"
+import AdminUserEditForm from "@/components/users/AdminUserEditForm.vue"
 
 const props = defineProps<{
   userId: string

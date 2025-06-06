@@ -24,7 +24,15 @@
       </div>
     </h2>
 
+    <AdminUserEditForm
+      v-if="isSystemAdmin"
+      class="mt-10"
+      :user-id="currentUser.id"
+      :cancel-button-options="{ to: { name: 'ProfilePage' } }"
+      @saved="refresh"
+    />
     <UserEditForm
+      v-else
       class="mt-10"
       :user-id="currentUser.id"
       :cancel-button-options="{ to: { name: 'ProfilePage' } }"
@@ -39,9 +47,10 @@ import { isNil } from "lodash"
 import useBreadcrumbs from "@/use/use-breadcrumbs"
 import useCurrentUser from "@/use/use-current-user"
 
+import AdminUserEditForm from "@/components/users/AdminUserEditForm.vue"
 import UserEditForm from "@/components/users/UserEditForm.vue"
 
-const { currentUser, sync, refresh } = useCurrentUser()
+const { currentUser, isSystemAdmin, sync, refresh } = useCurrentUser()
 
 const { setBreadcrumbs } = useBreadcrumbs()
 
