@@ -115,6 +115,7 @@ services:
 
   mail:
     image: maildev/maildev
+    user: root
     ports:
       - "1080:1080" # Web UI
       - "1025:1025" # SMTP
@@ -122,12 +123,12 @@ services:
   # For easily generating large PlantUML diagrams
   # Not relevant to production environment.
   # Accessible at http://localhost:9999
-  plantuml:
-    image: plantuml/plantuml-server:jetty
-    ports:
-      - 9999:8080
-    environment:
-      PLANTUML_LIMIT_SIZE: 8192
+  # plantuml:
+  #   image: plantuml/plantuml-server:jetty
+  #   ports:
+  #     - 9999:8080
+  #   environment:
+  #     PLANTUML_LIMIT_SIZE: 8192
 
 volumes:
   db_data:
