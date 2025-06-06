@@ -5,7 +5,7 @@
   />
   <v-form
     v-else
-    v-model="isValid"
+    ref="formRef"
     @submit.prevent="saveWrapper"
   >
     <v-row>
@@ -176,7 +176,7 @@
 import { isNil } from "lodash"
 import { ref, toRefs, watch } from "vue"
 import { useI18n } from "vue-i18n"
-import { VBtn } from "vuetify/lib/components/index.mjs"
+import { VBtn, VForm } from "vuetify/lib/components/index.mjs"
 
 import { required } from "@/utils/validators"
 
@@ -211,11 +211,15 @@ const { user, save, isLoading } = useUser(userId)
 
 const snack = useSnack()
 
-const isValid = ref(false)
 const groupMembershipAttributes = ref<Partial<GroupMembership>>({})
 
+const formRef = ref<InstanceType<typeof VForm> | null>(null)
+
 async function saveWrapper() {
-  if (!isValid.value) {
+  if (formRef.value === null) return
+
+  const { valid } = await formRef.value.validate()
+  if (!valid) {
     snack.notify("Please fill out all required fields", { color: "error" })
     return
   }
